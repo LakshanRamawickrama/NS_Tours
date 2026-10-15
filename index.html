@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>NS Tours Sri Lanka | Private Airport Taxi, Chauffeur & Curated Tours</title>
+  <meta name="description" content="Discover Sri Lanka with NS Tours. Premium private chauffeur transport, CMB airport transfers, 1-day & 2-day tour packages, wildlife safaris, and bespoke island journeys for international travelers.">
+  <meta name="keywords" content="Sri Lanka tours, Sri Lanka airport taxi, private chauffeur Sri Lanka, 1 day tour Sri Lanka, 2 day tour Sri Lanka, Galle day tour, Sigiriya day tour, Ella train tour, Yala safari, Mirissa whale watching, NS Tours">
+  <meta property="og:title" content="NS Tours Sri Lanka - Private Transport & Curated Tours">
+  <meta property="og:description" content="Reliable private chauffeur service, airport transfers, and customized 1-day, 2-day, and multi-day tours across Sri Lanka.">
+  <meta property="og:image" content="assets/images/hero.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="assets/images/logo.jpg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- Top Slim Utility Bar -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-trust">
+        <span class="trust-badge-pill">SLTDA Certified</span>
+        <span>Tourist Board Licensed Drivers • 100% Fixed Rates (All Highway Tolls Included)</span>
+      </div>
+
+      <div class="top-utilities">
+        <div class="top-currency">
+          <span>💱 Currency:</span>
+          <select id="currencySelector" class="currency-select" aria-label="Select Currency">
+            <option value="USD" selected>USD ($)</option>
+            <option value="EUR">EUR (€)</option>
+            <option value="GBP">GBP (£)</option>
+            <option value="AUD">AUD (A$)</option>
+            <option value="LKR">LKR (Rs)</option>
+          </select>
+        </div>
+
+        <a href="tel:+94770000000" class="top-link">
+          <span>📞 +94 77 000 0000</span>
+        </a>
+        <a href="mailto:info@nstours.com" class="top-link">
+          <span>✉️ info@nstours.com</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header Navigation -->
+  <header class="main-header">
+    <div class="container navbar">
+      <a href="#home" class="brand-link">
+        <img src="assets/images/logo.jpg" alt="NS Tours Sri Lanka" class="brand-logo-img">
+        <div class="brand-text">
+          <span class="brand-title">NS <span>TOURS</span></span>
+          <span class="brand-sub">Sri Lanka • Private Journeys</span>
+        </div>
+      </a>
+
+      <!-- Clean Single-line Navigation Menu -->
+      <nav>
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#transport" class="nav-link">Airport Taxi</a></li>
+          <li><a href="#tours" class="nav-link">Day Tours</a></li>
+          <li><a href="#tours" class="nav-link">2-Day Escapes</a></li>
+          <li><a href="#fleet" class="nav-link">Our Fleet</a></li>
+          <li><a href="#routes" class="nav-link">Fixed Rates</a></li>
+          <li><a href="#reviews" class="nav-link">Reviews</a></li>
+          <li><a href="#faq" class="nav-link">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="https://wa.me/94770000000?text=Hello%20NS%20TOURS!%20I%20would%20like%20to%20inquire%20about%20tours%20and%20private%20transport." target="_blank" class="btn-header-wa">
+          <span>💬 WhatsApp Desk</span>
+        </a>
+        <button class="mobile-toggle-btn" id="mobileMenuToggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section with Integrated Booking Card -->
+  <section class="hero-section" id="home">
+    <div class="container">
+      <div class="hero-header-box">
+        <div class="hero-trust-tag">
+          <span class="hero-stars">★ ★ ★ ★ ★</span>
+          <span>Trusted by 12,000+ Foreign Travelers</span>
+        </div>
+        <h1 class="hero-main-title">Sri Lanka Private Chauffeur &amp; <span class="highlight">Curated Tours</span></h1>
+        <p class="hero-sub-text">
+          Reliable airport transfers, handcrafted 1-day & 2-day excursions, and bespoke island journeys tailored for international travelers.
+        </p>
+      </div>
+
+      <!-- Booking Card (Directly Visible Above the Fold) -->
+      <div class="booking-card">
+        <div class="booking-tabs-nav">
+          <button class="booking-tab-item active" data-tab="tabTransport">
+            <span>🚗 Book Airport Taxi &amp; Transfers</span>
+          </button>
+          <button class="booking-tab-item" data-tab="tabTours">
+            <span>🗺️ Explore Tour Packages (1-Day &amp; 2-Day)</span>
+          </button>
+        </div>
+
+        <!-- Panel 1: Transport Calculator -->
+        <div class="booking-pane active" id="tabTransport">
+          <div class="booking-form-grid">
+            <div class="input-box">
+              <label class="input-label" for="calcPickup">📍 Pickup Location</label>
+              <select id="calcPickup" class="input-field">
+                <option value="CMB Airport" selected>Bandaranaike Airport (CMB)</option>
+                <option value="Colombo">Colombo City</option>
+                <option value="Negombo">Negombo</option>
+                <option value="Bentota">Bentota</option>
+                <option value="Galle">Galle Fort</option>
+                <option value="Mirissa">Mirissa</option>
+                <option value="Ella">Ella</option>
+                <option value="Kandy">Kandy</option>
+                <option value="Sigiriya">Sigiriya</option>
+              </select>
+            </div>
+
+            <div class="input-box">
+              <label class="input-label" for="calcDropoff">🏁 Drop-off Destination</label>
+              <select id="calcDropoff" class="input-field">
+                <option value="Mirissa" selected>Mirissa / Weligama</option>
+                <option value="Galle">Galle / Unawatuna</option>
+                <option value="Bentota">Bentota / Hikkaduwa</option>
+                <option value="Colombo">Colombo City Center</option>
+                <option value="Kandy">Kandy Hill Capital</option>
+                <option value="Sigiriya">Sigiriya / Dambulla</option>
+                <option value="Ella">Ella Mountain Village</option>
+                <option value="Yala">Yala National Park</option>
+                <option value="CMB Airport">Bandaranaike Airport (CMB)</option>
+              </select>
+            </div>
+
+            <div class="input-box">
+              <label class="input-label" for="calcVehicle">🚘 Vehicle Type</label>
+              <select id="calcVehicle" class="input-field">
+                <option value="sedan" selected>Sedan Car (1-3 Pax, 2 Bags)</option>
+                <option value="van">Toyota KDH Luxury Van (4-8 Pax)</option>
+                <option value="suv">Premium 4WD SUV (1-4 Pax)</option>
+                <option value="coach">Mini Coach (9-18 Pax)</option>
+              </select>
+            </div>
+
+            <div class="input-box">
+              <label class="input-label" for="calcDate">📅 Pickup Date</label>
+              <input type="date" id="calcDate" class="input-field">
+            </div>
+
+            <div class="input-box">
+              <label class="input-label" for="calcTime">⏰ Flight / Pickup Time</label>
+              <input type="time" id="calcTime" class="input-field" value="10:00">
+            </div>
+
+            <div class="input-box">
+              <label class="input-label" for="calcPax">👥 Guests</label>
+              <select id="calcPax" class="input-field">
+                <option value="1">1 Person</option>
+                <option value="2" selected>2 Persons</option>
+                <option value="3">3 Persons</option>
+                <option value="4-6">4-6 Persons</option>
+                <option value="7+">7+ Group</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="quote-strip">
+            <div class="quote-left">
+              <span class="quote-label">Estimated Fixed Rate (Expressway Tolls &amp; Fuel Included)</span>
+              <div class="quote-price-line">
+                <span class="quote-amount" id="calcQuotePrice">$ 85</span>
+                <span class="quote-meta-tag" id="calcRouteMeta">175 km • 2h 15m • Free Mineral Water &amp; Wi-Fi</span>
+              </div>
+            </div>
+
+            <button type="button" class="btn-book-cta" id="btnBookTransport">
+              <span>💬 Book on WhatsApp Instantly</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Panel 2: Quick Tour Filter -->
+        <div class="booking-pane" id="tabTours">
+          <div class="booking-form-grid">
+            <div class="input-box">
+              <label class="input-label" for="tourDurationSelect">⏱️ Select Tour Duration</label>
+              <select id="tourDurationSelect" class="input-field" onchange="filterToursFromSelect(this.value)">
+                <option value="all">All Available Packages</option>
+                <option value="1day">1-Day Highlights</option>
+                <option value="2day">2-Day Scenic Escapes</option>
+                <option value="multiday">Multi-Day Expeditions (3-7 Days)</option>
+                <option value="safari">Wildlife Safari &amp; Marine</option>
+              </select>
+            </div>
+
+            <div class="input-box">
+              <label class="input-label">🌴 Favorite Destination</label>
+              <select class="input-field">
+                <option>Sigiriya &amp; Dambulla Caves</option>
+                <option>Galle Fort &amp; Sea Turtles</option>
+                <option>Ella Scenic Train &amp; Tea</option>
+                <option>Udawalawe / Yala Safari</option>
+                <option>Mirissa Whale Watching</option>
+              </select>
+            </div>
+
+            <div class="input-box">
+              <label class="input-label">👥 Number of Guests</label>
+              <select class="input-field">
+                <option>Solo Explorer</option>
+                <option selected>Couple (2 Persons)</option>
+                <option>Family (3-5 Persons)</option>
+                <option>Group (6+ Persons)</option>
+              </select>
+            </div>
+
+            <div class="input-box">
+              <label class="input-label">🚀 Action</label>
+              <a href="#tours" class="btn-book-cta" style="justify-content: center; width: 100%;">
+                <span>Browse Tours Below ↓</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clear Trust Guarantees Bar -->
+  <div class="guarantee-bar">
+    <div class="container guarantee-grid">
+      <div class="guarantee-item">
+        <div class="guarantee-icon">🛡️</div>
+        <div>
+          <div class="guarantee-title">SLTDA Certified Chauffeurs</div>
+          <div class="guarantee-sub">Licensed English-speaking professional guides.</div>
+        </div>
+      </div>
+
+      <div class="guarantee-item">
+        <div class="guarantee-icon">💎</div>
+        <div>
+          <div class="guarantee-title">Zero Hidden Tolls or Fees</div>
+          <div class="guarantee-sub">Expressway tolls, fuel, and parking 100% included.</div>
+        </div>
+      </div>
+
+      <div class="guarantee-item">
+        <div class="guarantee-icon">❄️</div>
+        <div>
+          <div class="guarantee-title">Spotless AC Vehicles</div>
+          <div class="guarantee-sub">Chilled AC, high-speed Wi-Fi & mineral water.</div>
+        </div>
+      </div>
+
+      <div class="guarantee-item">
+        <div class="guarantee-icon">🔄</div>
+        <div>
+          <div class="guarantee-title">Free Cancellation</div>
+          <div class="guarantee-sub">Cancel up to 24 hours prior with zero penalty.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tour Packages Section -->
+  <section class="section-wrap" id="tours">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-badge">Handcrafted Journeys</span>
+        <h2 class="section-heading">Curated Sri Lanka Tour Packages</h2>
+        <p class="section-desc">
+          Created specifically for international tourists. Choose between thrilling 1-day highlights, 2-day countryside escapes, and multi-day island expeditions.
+        </p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="filter-tabs-row">
+        <button class="filter-pill-btn active" data-filter="all">All Experiences</button>
+        <button class="filter-pill-btn" data-filter="1day">1-Day Excursions</button>
+        <button class="filter-pill-btn" data-filter="2day">2-Day Escapes</button>
+        <button class="filter-pill-btn" data-filter="multiday">Multi-Day Expeditions</button>
+        <button class="filter-pill-btn" data-filter="safari">Safari &amp; Ocean</button>
+      </div>
+
+      <!-- Tours Cards Grid -->
+      <div class="tours-card-grid" id="toursGrid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Transport & Fleet Section -->
+  <section class="section-wrap" id="transport" style="background: #FFFFFF;">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-badge">Private Transport</span>
+        <h2 class="section-heading">Island-Wide Airport Taxi &amp; Chauffeur Fleet</h2>
+        <p class="section-desc">
+          Arrive stress-free at Bandaranaike International Airport (CMB) or Mattala (HRI). Your private chauffeur greets you with a personalized name board at the arrival lounge.
+        </p>
+      </div>
+
+      <!-- Fleet Banner Card -->
+      <div class="fleet-box" id="fleet">
+        <img src="assets/images/fleet.jpg" alt="NS Tours Luxury Chauffeur Fleet" class="fleet-img">
+        <div class="fleet-details">
+          <span style="font-size: 0.72rem; font-weight: 800; color: var(--primary); text-transform: uppercase; margin-bottom: 8px;">Executive Standards</span>
+          <h3 class="fleet-title">Travel Across Sri Lanka in Total Peace of Mind</h3>
+          <p class="fleet-text">
+            Navigating Sri Lankan roads requires experienced local drivers. Our fleet is maintained to international tourism safety standards with generous luggage room, climate control, and smooth coastal highway transit.
+          </p>
+
+          <div class="fleet-checklist">
+            <div class="fleet-check-item"><span class="check-icon">✔</span> Airport Name Board Meet &amp; Greet</div>
+            <div class="fleet-check-item"><span class="check-icon">✔</span> High-speed 4G Onboard Wi-Fi</div>
+            <div class="fleet-check-item"><span class="check-icon">✔</span> Chilled Bottled Mineral Water</div>
+            <div class="fleet-check-item"><span class="check-icon">✔</span> Live Flight Delay Monitoring</div>
+            <div class="fleet-check-item"><span class="check-icon">✔</span> Full Passenger Insurance</div>
+            <div class="fleet-check-item"><span class="check-icon">✔</span> Child Safety Seats (On Request)</div>
+          </div>
+
+          <a href="https://wa.me/94770000000?text=Hello%20NS%20TOURS!%20I%20would%20like%20to%20hire%20a%20private%20chauffeur%20and%20car." target="_blank" class="btn-book-cta" style="align-self: flex-start;">
+            <span>💬 Inquire for Private Chauffeur</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Vehicle Categories Grid -->
+      <div class="vehicles-card-grid">
+        <div class="vehicle-box">
+          <div class="vehicle-icon">🚗</div>
+          <h4 class="vehicle-title">Premium Sedan</h4>
+          <p class="vehicle-sub">Toyota Prius, Axio or Allion</p>
+          <div class="vehicle-pill-row">
+            <span class="vehicle-pill">👤 Max 3 Pax</span>
+            <span class="vehicle-pill">🧳 2 Large Bags</span>
+            <span class="vehicle-pill">❄️ Full AC</span>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">
+            Ideal for couples and solo adventurers wanting fast, economical, and agile island travel.
+          </p>
+          <div class="vehicle-fare-footer">
+            <span style="font-size: 0.72rem; color: var(--text-muted);">CMB to Colombo</span>
+            <strong style="color: var(--primary-hover); font-size: 1.05rem;">From $ 28</strong>
+          </div>
+        </div>
+
+        <div class="vehicle-box" style="border-color: #FCD34D;">
+          <div class="vehicle-icon">🚐</div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <h4 class="vehicle-title">Toyota KDH Luxury Van</h4>
+            <span style="background: #FEF3C7; color: #B45309; font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 99px;">POPULAR</span>
+          </div>
+          <p class="vehicle-sub">Toyota KDH High-Roof Commuter</p>
+          <div class="vehicle-pill-row">
+            <span class="vehicle-pill">👤 4 - 8 Pax</span>
+            <span class="vehicle-pill">🧳 6-8 Large Bags</span>
+            <span class="vehicle-pill">❄️ Dual AC</span>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">
+            The gold standard for families and small groups. Reclining captain seats, tinted windows, and spacious luggage room.
+          </p>
+          <div class="vehicle-fare-footer">
+            <span style="font-size: 0.72rem; color: var(--text-muted);">CMB to Mirissa / Galle</span>
+            <strong style="color: var(--primary-hover); font-size: 1.05rem;">From $ 95</strong>
+          </div>
+        </div>
+
+        <div class="vehicle-box">
+          <div class="vehicle-icon">🚙</div>
+          <h4 class="vehicle-title">Executive 4WD SUV</h4>
+          <p class="vehicle-sub">Toyota Prado / Fortuner 4x4</p>
+          <div class="vehicle-pill-row">
+            <span class="vehicle-pill">👤 Max 4 Pax</span>
+            <span class="vehicle-pill">🧳 3-4 Large Bags</span>
+            <span class="vehicle-pill">⛰️ 4WD Luxury</span>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">
+            Elevated luxury and off-road capability for mountain trails, tea estates, and wildlife borders.
+          </p>
+          <div class="vehicle-fare-footer">
+            <span style="font-size: 0.72rem; color: var(--text-muted);">CMB to Hill Country</span>
+            <strong style="color: var(--primary-hover); font-size: 1.05rem;">From $ 120</strong>
+          </div>
+        </div>
+
+        <div class="vehicle-box">
+          <div class="vehicle-icon">🚌</div>
+          <h4 class="vehicle-title">Tourist Mini Coach</h4>
+          <p class="vehicle-sub">Toyota Coaster (14-22 Seater)</p>
+          <div class="vehicle-pill-row">
+            <span class="vehicle-pill">👤 9 - 18 Pax</span>
+            <span class="vehicle-pill">🧳 Group Luggage</span>
+            <span class="vehicle-pill">🎙️ PA System</span>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">
+            Perfect for corporate retreats, wedding guests, and international travel group charters.
+          </p>
+          <div class="vehicle-fare-footer">
+            <span style="font-size: 0.72rem; color: var(--text-muted);">Island-wide Charter</span>
+            <strong style="color: var(--primary-hover); font-size: 1.05rem;">Custom Quote</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Fixed Rate Routes Table -->
+  <section class="section-wrap" id="routes">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-badge">Instant Fixed Fares</span>
+        <h2 class="section-heading">Popular Airport &amp; Intercity Transfers</h2>
+        <p class="section-desc">
+          Rates below are per vehicle (Sedan car, up to 3 passengers) and include all highway toll tickets, driver allowance, and fuel.
+        </p>
+      </div>
+
+      <div class="routes-card-table">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>From (Origin)</th>
+              <th>To (Destination)</th>
+              <th>Distance &amp; Duration</th>
+              <th>Expressway Tolls</th>
+              <th>Fixed Rate (Sedan)</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="route-row" data-usd="28">
+              <td><strong>✈️ CMB Airport</strong></td>
+              <td><strong>🏙️ Colombo City Center</strong></td>
+              <td>35 km • 35 mins</td>
+              <td><span style="color: var(--accent-green); font-weight: 700;">Included (E03)</span></td>
+              <td><span class="route-price-tag">$ 28</span></td>
+              <td><button class="btn-card-wa" onclick="quickBookRoute('CMB Airport', 'Colombo City')">Book Taxi</button></td>
+            </tr>
+            <tr class="route-row" data-usd="75">
+              <td><strong>✈️ CMB Airport</strong></td>
+              <td><strong>🏰 Galle Fort / Unawatuna</strong></td>
+              <td>155 km • 1 hr 55 mins</td>
+              <td><span style="color: var(--accent-green); font-weight: 700;">Included (E01/E02)</span></td>
+              <td><span class="route-price-tag">$ 75</span></td>
+              <td><button class="btn-card-wa" onclick="quickBookRoute('CMB Airport', 'Galle Fort')">Book Taxi</button></td>
+            </tr>
+            <tr class="route-row" data-usd="85">
+              <td><strong>✈️ CMB Airport</strong></td>
+              <td><strong>🐋 Mirissa / Weligama Bay</strong></td>
+              <td>175 km • 2 hrs 15 mins</td>
+              <td><span style="color: var(--accent-green); font-weight: 700;">Included (Southern HWY)</span></td>
+              <td><span class="route-price-tag">$ 85</span></td>
+              <td><button class="btn-card-wa" onclick="quickBookRoute('CMB Airport', 'Mirissa')">Book Taxi</button></td>
+            </tr>
+            <tr class="route-row" data-usd="55">
+              <td><strong>✈️ CMB Airport</strong></td>
+              <td><strong>🏖️ Bentota / Beruwala</strong></td>
+              <td>105 km • 1 hr 30 mins</td>
+              <td><span style="color: var(--accent-green); font-weight: 700;">Included</span></td>
+              <td><span class="route-price-tag">$ 55</span></td>
+              <td><button class="btn-card-wa" onclick="quickBookRoute('CMB Airport', 'Bentota')">Book Taxi</button></td>
+            </tr>
+            <tr class="route-row" data-usd="65">
+              <td><strong>✈️ CMB Airport</strong></td>
+              <td><strong>⛰️ Kandy Cultural Capital</strong></td>
+              <td>115 km • 3 hrs</td>
+              <td><span style="color: var(--accent-green); font-weight: 700;">Included (Central HWY)</span></td>
+              <td><span class="route-price-tag">$ 65</span></td>
+              <td><button class="btn-card-wa" onclick="quickBookRoute('CMB Airport', 'Kandy')">Book Taxi</button></td>
+            </tr>
+            <tr class="route-row" data-usd="80">
+              <td><strong>✈️ CMB Airport</strong></td>
+              <td><strong>🦁 Sigiriya Rock Fortress</strong></td>
+              <td>148 km • 3 hrs 30 mins</td>
+              <td><span style="color: var(--accent-green); font-weight: 700;">Included</span></td>
+              <td><span class="route-price-tag">$ 80</span></td>
+              <td><button class="btn-card-wa" onclick="quickBookRoute('CMB Airport', 'Sigiriya')">Book Taxi</button></td>
+            </tr>
+            <tr class="route-row" data-usd="115">
+              <td><strong>✈️ CMB Airport</strong></td>
+              <td><strong>🚂 Ella Mountain Village</strong></td>
+              <td>210 km • 4 hrs 30 mins</td>
+              <td><span style="color: var(--accent-green); font-weight: 700;">Included</span></td>
+              <td><span class="route-price-tag">$ 115</span></td>
+              <td><button class="btn-card-wa" onclick="quickBookRoute('CMB Airport', 'Ella')">Book Taxi</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tailor-Made Custom Trip Planner -->
+  <section class="container" style="margin-bottom: 60px;">
+    <div class="planner-wrapper">
+      <div class="planner-layout">
+        <div>
+          <span style="color: #FBBF24; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px;">Bespoke Journeys</span>
+          <h2 class="planner-heading">Want a 100% Customized Sri Lanka Itinerary?</h2>
+          <p class="planner-text">
+            Tell us your travel dates, preferred destinations, and style. Our travel planners will design your personalized day-by-day itinerary with a private vehicle and English chauffeur within 2 hours.
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.85rem; color: #E2E8F0;">
+            <div>✔ Private vehicle dedicated exclusively to your group</div>
+            <div>✔ Free itinerary modifications anytime</div>
+            <div>✔ Flexible photo and refreshment stopovers</div>
+          </div>
+        </div>
+
+        <form class="planner-form-card" id="plannerForm">
+          <input type="text" id="planName" class="planner-ctrl" placeholder="Your Name (e.g. Sarah Miller)" required>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <select id="planDays" class="planner-ctrl">
+              <option value="1 Day">1 Day Tour</option>
+              <option value="2 Days">2 Days Escape</option>
+              <option value="3-5 Days" selected>3 - 5 Days</option>
+              <option value="7-10 Days">7 - 10 Days</option>
+              <option value="14+ Days">2 Weeks+ Grand Tour</option>
+            </select>
+            
+            <select id="planGuests" class="planner-ctrl">
+              <option value="1 Adult">1 Adult</option>
+              <option value="2 Adults" selected>2 Adults (Couple)</option>
+              <option value="Family (3-4)">Family (3-4 Pax)</option>
+              <option value="Group 5+">Group 5+ Pax</option>
+            </select>
+          </div>
+
+          <select id="planVibe" class="planner-ctrl">
+            <option value="Wildlife Safari & Nature">Wildlife Safari &amp; Elephants</option>
+            <option value="Beaches & Ocean Marine">Beaches &amp; Whale Watching</option>
+            <option value="Culture, Temples & Heritage">Ancient Culture &amp; Temples</option>
+            <option value="Scenic Trains & Tea Highlands">Scenic Trains &amp; Tea Country</option>
+            <option value="Complete Island Mix" selected>Complete Island Highlights Mix</option>
+          </select>
+
+          <input type="text" id="planNotes" class="planner-ctrl" placeholder="Special highlights (e.g. Sigiriya climb, Ella train)">
+
+          <button type="button" id="btnSubmitCustomPlan" class="btn-book-cta" style="justify-content: center; width: 100%;">
+            <span>💬 Send Custom Plan on WhatsApp</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Real Traveler Reviews -->
+  <section class="section-wrap" id="reviews" style="background: #FFFFFF;">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-badge">Foreign Traveler Reviews</span>
+        <h2 class="section-heading">What Our Global Guests Say</h2>
+        <p class="section-desc">
+          Over 1,200+ five-star reviews on TripAdvisor and Google from guests across the UK, Germany, Australia, and the USA.
+        </p>
+      </div>
+
+      <div class="reviews-row">
+        <div class="review-item">
+          <div>
+            <div style="color: #F59E0B; margin-bottom: 10px; font-size: 1rem;">★ ★ ★ ★ ★</div>
+            <p class="review-quote">
+              "NS Tours organized our airport pickup and a 2-day tour to Ella and Sigiriya. The car was brand new and spotless with cold AC. Our driver was like having a private local friend who knew every secret photo spot and avoided tourist traps!"
+            </p>
+          </div>
+          <div class="review-meta">
+            <div class="reviewer-avatar">CM</div>
+            <div>
+              <div class="reviewer-name">Charlotte &amp; Marcus</div>
+              <div class="reviewer-loc">London, United Kingdom 🇬🇧</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-item">
+          <div>
+            <div style="color: #F59E0B; margin-bottom: 10px; font-size: 1rem;">★ ★ ★ ★ ★</div>
+            <p class="review-quote">
+              "We booked the 1-Day Udawalawe Elephant Safari and Galle Fort trip. Seeing over 40 wild elephants up close was magical. Completely hassle-free with direct WhatsApp communication. No hidden fees at all!"
+            </p>
+          </div>
+          <div class="review-meta">
+            <div class="reviewer-avatar">JW</div>
+            <div>
+              <div class="reviewer-name">Jonas &amp; Hannah Weber</div>
+              <div class="reviewer-loc">Munich, Germany 🇩🇪</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-item">
+          <div>
+            <div style="color: #F59E0B; margin-bottom: 10px; font-size: 1rem;">★ ★ ★ ★ ★</div>
+            <p class="review-quote">
+              "Booked their KDH van for our family of 6 from Colombo Airport down to Mirissa. Our flight landed at 2:00 AM, and our driver was waiting right outside customs with our name on a sign. Safe, smooth driving and very punctual."
+            </p>
+          </div>
+          <div class="review-meta">
+            <div class="reviewer-avatar">DB</div>
+            <div>
+              <div class="reviewer-name">David &amp; Karen Bell</div>
+              <div class="reviewer-loc">Sydney, Australia 🇦🇺</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Accordion -->
+  <section class="section-wrap" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-badge">Frequently Asked Questions</span>
+        <h2 class="section-heading">Everything You Need to Know</h2>
+        <p class="section-desc">
+          Transparent information to ensure your Sri Lanka journey is completely seamless.
+        </p>
+      </div>
+
+      <div class="faq-wrap-box">
+        <div class="faq-card active">
+          <button class="faq-q-btn">
+            <span>How do I meet my driver at Colombo Airport (CMB)?</span>
+            <span class="faq-icon-symbol">+</span>
+          </button>
+          <div class="faq-ans-text">
+            After you clear immigration, retrieve your luggage, and exit customs into the main arrival lobby, your NS Tours chauffeur will be waiting right in front of the paging barrier holding a clear name board with your name. We track your flight in real time, so even if your flight is delayed, your driver will be there.
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <button class="faq-q-btn">
+            <span>Are highway expressway tolls and parking fees included?</span>
+            <span class="faq-icon-symbol">+</span>
+          </button>
+          <div class="faq-ans-text">
+            Yes, 100%! Unlike many taxi providers who add expressway toll receipts as surprise extras, all NS Tours quotes are fully all-inclusive: vehicle hire, air-conditioning, driver allowance, fuel, parking charges, and all highway toll tickets.
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <button class="faq-q-btn">
+            <span>What currencies and payment methods do you accept?</span>
+            <span class="faq-icon-symbol">+</span>
+          </button>
+          <div class="faq-ans-text">
+            You can pay directly to your driver in cash upon arrival. We accept US Dollars (USD $), Euros (EUR €), British Pounds (GBP £), and Sri Lankan Rupees (LKR Rs) at the official exchange rate of the day. Credit card payment links are also available upon request.
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <button class="faq-q-btn">
+            <span>Can we customize the stops during our 1-Day or 2-Day tours?</span>
+            <span class="faq-icon-symbol">+</span>
+          </button>
+          <div class="faq-ans-text">
+            Yes. Our tours are 100% private. You never share the vehicle with strangers. You can pause anytime for scenic photography, King Coconut roadside refreshments, or coffee breaks.
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <button class="faq-q-btn">
+            <span>Do your drivers speak fluent English?</span>
+            <span class="faq-icon-symbol">+</span>
+          </button>
+          <div class="faq-ans-text">
+            Yes. All our chauffeurs are licensed by the Sri Lanka Tourism Development Authority (SLTDA), background-checked, courteous, and speak fluent English.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Detailed Itinerary Modal -->
+  <div class="modal-overlay" id="tourModal" onclick="handleModalBackdropClick(event)">
+    <div class="modal-card">
+      <div class="modal-img-wrap">
+        <img src="assets/images/sigiriya.jpg" alt="Tour Banner" class="modal-cover-img" id="modalBannerImg">
+        <button class="modal-close-icon" onclick="closeTourModal()" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-content-pad">
+        <span style="font-size: 0.72rem; font-weight: 800; color: var(--secondary-dark); text-transform: uppercase;" id="modalTourCategory">Tour Category</span>
+        <h3 style="font-family: var(--font-heading); font-size: 1.4rem; color: var(--dark); margin: 4px 0 12px;" id="modalTourTitle">Tour Title</h3>
+        
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;">
+          <span class="feature-tag" id="modalTourDuration">⏱️ 1 Day</span>
+          <span class="feature-tag" style="background: #FEF3C7; color: #92400E;">🛡️ SLTDA Certified Guide</span>
+          <span class="feature-tag" style="background: #CCFBF1; color: #0F766E;">❄️ Private AC Vehicle</span>
+        </div>
+
+        <h4 style="font-size: 0.95rem; color: var(--dark); margin: 16px 0 8px;">Detailed Step-by-Step Itinerary:</h4>
+        <div class="modal-timeline-list" id="modalTimeline">
+          <!-- Populated dynamically -->
+        </div>
+
+        <h4 style="font-size: 0.95rem; color: var(--dark); margin: 16px 0 8px;">Included in Your Experience:</h4>
+        <div class="package-features" id="modalInclusions">
+          <!-- Populated dynamically -->
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-color);">
+          <div>
+            <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase;">Total Starting Rate</span>
+            <div id="modalTourPrice" style="font-size: 1.4rem; font-weight: 800; color: var(--dark); font-family: var(--font-heading);">$ 78</div>
+          </div>
+          <button class="btn-book-cta" id="modalBookBtn">
+            <span>💬 Book on WhatsApp</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Quick WhatsApp Button -->
+  <a href="https://wa.me/94770000000?text=Hello%20NS%20TOURS!%20I%20would%20like%20to%20plan%20my%20trip%20to%20Sri%20Lanka." target="_blank" class="wa-float-btn" aria-label="Chat on WhatsApp">
+    <span>💬 WhatsApp 24/7</span>
+  </a>
+
+  <!-- Site Footer -->
+  <footer class="footer-wrap">
+    <div class="container">
+      <div class="footer-columns">
+        <div>
+          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+            <img src="assets/images/logo.jpg" alt="NS Tours Logo" style="width: 44px; height: 44px; border-radius: 4px; background: white; padding: 2px;">
+            <span style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 800; color: white;">NS <span style="color: var(--primary);">TOURS</span></span>
+          </div>
+          <p style="font-size: 0.84rem; line-height: 1.6; color: #94A3B8; margin-bottom: 16px;">
+            Sri Lanka’s premier tourist transport and tour provider. Offering reliable private airport taxis, licensed English-speaking chauffeurs, and handcrafted excursions across the island.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Popular Tours</h4>
+          <ul class="footer-nav">
+            <li><a href="#tours">Galle Fort &amp; Turtle Safari</a></li>
+            <li><a href="#tours">Sigiriya &amp; Dambulla Caves</a></li>
+            <li><a href="#tours">Ella Scenic Train &amp; Tea</a></li>
+            <li><a href="#tours">Udawalawe Elephant Safari</a></li>
+            <li><a href="#tours">Mirissa Whale Watching</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Airport Taxi</h4>
+          <ul class="footer-nav">
+            <li><a href="#transport">CMB Airport to Mirissa</a></li>
+            <li><a href="#transport">CMB Airport to Galle</a></li>
+            <li><a href="#transport">CMB Airport to Bentota</a></li>
+            <li><a href="#transport">CMB Airport to Kandy</a></li>
+            <li><a href="#transport">CMB Airport to Ella</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Contact &amp; Desk</h4>
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.84rem;">
+            <div>📍 Tourist Hub, Galle Road, Sri Lanka</div>
+            <div>📞 +94 77 000 0000 (WhatsApp 24/7)</div>
+            <div>✉️ info@nstours.com</div>
+            <div>⏰ Open 24 Hours / 7 Days Island-wide</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom-line">
+        <div>© 2026 NS Tours Sri Lanka. All Rights Reserved. Licensed Tourist Transport Operator.</div>
+        <div style="display: flex; gap: 16px;">
+          <a href="#" style="color: #94A3B8;">Privacy Policy</a>
+          <a href="#" style="color: #94A3B8;">Terms of Service</a>
+          <a href="#" style="color: #94A3B8;">Safety Guarantee</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/app.js"></script>
+  <script>
+    function filterToursFromSelect(val) {
+      const btn = document.querySelector(`.filter-pill-btn[data-filter="${val}"]`);
+      if (btn) btn.click();
+    }
+
+    function quickBookRoute(origin, dest) {
+      const msg = `Hello NS TOURS! 👋\n\nI want to book an airport taxi transfer:\n\n📍 From: ${origin}\n🏁 To: ${dest}\n\nPlease share driver availability and confirmation. Thank you!`;
+      openWhatsApp(msg);
+    }
+
+    function handleModalBackdropClick(e) {
+      if (e.target.id === 'tourModal') {
+        closeTourModal();
+      }
+    }
+  </script>
+</body>
+</html>
