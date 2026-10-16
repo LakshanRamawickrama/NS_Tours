@@ -16,11 +16,12 @@ const CURRENCIES = {
   USD: { symbol: '$', rate: 1, label: 'USD ($)' },
   EUR: { symbol: '€', rate: 0.92, label: 'EUR (€)' },
   GBP: { symbol: '£', rate: 0.78, label: 'GBP (£)' },
+  CHF: { symbol: 'Fr', rate: 0.80, label: 'CHF (Fr)' },
   AUD: { symbol: 'A$', rate: 1.52, label: 'AUD (A$)' },
   LKR: { symbol: 'Rs.', rate: 305, label: 'LKR (Rs)' }
 };
 
-let currentCurrency = 'USD';
+let currentCurrency = 'EUR'; // Main market is Europe
 
 // Base distances and sedan rates in USD
 const ROUTE_DATA = {
@@ -218,22 +219,35 @@ document.addEventListener('DOMContentLoaded', () => {
   initTransportCalculator();
   renderTourCards('all');
   initTourFilters();
+  initToursMegaMenu();
   initFaqAccordion();
   initMobileMenu();
+  initHeaderScroll();
+  initHeroVideo();
+  initScrollAnimations();
+  initGallery();
+  initGallerySlider();
+  initVehicleCards();
   initPlannerForm();
   updateRouteTablePrices();
+  updateVehicleCardPrices();
 });
 
 /* ==========================================================================
    CURRENCY CONVERSION SYSTEM
    ========================================================================== */
 function initCurrency() {
-  const currencySelector = document.getElementById('currencySelector');
-  if (!currencySelector) return;
+  // Header selector (desktop) and mobile-menu selector stay in sync
+  const selectors = ['currencySelector', 'currencySelectorMobile']
+    .map(id => document.getElementById(id))
+    .filter(Boolean);
 
-  currencySelector.addEventListener('change', (e) => {
-    currentCurrency = e.target.value;
-    updateAllPrices();
+  selectors.forEach(selector => {
+    selector.addEventListener('change', (e) => {
+      currentCurrency = e.target.value;
+      selectors.forEach(other => { other.value = currentCurrency; });
+      updateAllPrices();
+    });
   });
 }
 
@@ -247,6 +261,14 @@ function updateAllPrices() {
   renderTourCards(getActiveFilter());
   calculateFare();
   updateRouteTablePrices();
+  updateVehicleCardPrices();
+  renderToursMegaMenu();
+}
+
+function updateVehicleCardPrices() {
+  document.querySelectorAll('.vehicle-price[data-price-usd]').forEach(el => {
+    el.textContent = formatPrice(Number(el.dataset.priceUsd));
+  });
 }
 
 /* ==========================================================================
@@ -300,7 +322,7 @@ function initTransportCalculator() {
       const pax = paxEl ? paxEl.value : '2';
       const quotePrice = document.getElementById('calcQuotePrice').textContent;
 
-      const message = `Hello NS TOURS! 👋\n\nI would like to book a private transfer:\n\n📍 *Pickup:* ${pickup}\n🏁 *Drop-off:* ${dropoff}\n🚗 *Vehicle:* ${vehicle}\n📅 *Date:* ${date} at ${time || 'Flexible'}\n👥 *Passengers:* ${pax}\n💵 *Estimated Rate:* ${quotePrice}\n\nPlease confirm availability and driver details. Thank you!`;
+      const message = `Hello NS TOURS!\n\nI would like to book a private transfer:\n\n*Pickup:* ${pickup}\n*Drop-off:* ${dropoff}\n*Vehicle:* ${vehicle}\n*Date:* ${date} at ${time || 'Flexible'}\n*Passengers:* ${pax}\n*Estimated Rate:* ${quotePrice}\n\nPlease confirm availability and driver details. Thank you!`;
 
       openWhatsApp(message);
     });
@@ -370,6 +392,55 @@ function updateRouteTablePrices() {
 /* ==========================================================================
    TOUR CARDS & FILTERING
    ========================================================================== */
+/* ==========================================================================
+   TOURS MEGA MENU (header dropdown)
+   ========================================================================== */
+function renderToursMegaMenu() {
+  const dayList = document.getElementById('megaDayTours');
+  const multiList = document.getElementById('megaMultiTours');
+  if (!dayList || !multiList) return;
+
+  const item = (tour) => `
+    <li>
+      <button type="button" class="tours-mega-item" data-tour-id="${tour.id}">
+        <span class="mega-item-text">
+          <span class="mega-item-title">${tour.title}</span>
+          <span class="mega-item-meta">${tour.duration}</span>
+        </span>
+        <span class="mega-item-price">${formatPrice(tour.basePriceUSD)}</span>
+      </button>
+    </li>`;
+
+  const isMultiDay = (t) => t.category === '2day' || t.category === 'multiday';
+  dayList.innerHTML = TOURS.filter(t => !isMultiDay(t)).map(item).join('');
+  multiList.innerHTML = TOURS.filter(isMultiDay).map(item).join('');
+}
+
+function initToursMegaMenu() {
+  const mega = document.getElementById('toursMega');
+  if (!mega) return;
+
+  renderToursMegaMenu();
+
+  mega.addEventListener('click', (e) => {
+    // Tour row: open its details popup
+    const tourBtn = e.target.closest('.tours-mega-item');
+    if (tourBtn) {
+      openTourModal(tourBtn.dataset.tourId);
+      tourBtn.blur();
+      return;
+    }
+
+    // Quick filter link: apply the matching filter on the tours section
+    const filterLink = e.target.closest('[data-menu-filter]');
+    if (filterLink) {
+      const pill = document.querySelector(`.filter-pill-btn[data-filter="${filterLink.dataset.menuFilter}"]`);
+      if (pill) pill.click();
+      filterLink.blur();
+    }
+  });
+}
+
 function getActiveFilter() {
   const activeBtn = document.querySelector('.filter-pill-btn.active, .filter-btn.active');
   return activeBtn ? activeBtn.dataset.filter : 'all';
@@ -396,41 +467,67 @@ function renderTourCards(filter = 'all') {
 
   grid.innerHTML = filtered.map(tour => {
     return `
-      <div class="package-card" data-category="${tour.category}">
-        <div class="package-media">
-          <img src="${tour.image}" alt="${tour.title}" class="package-img" loading="lazy">
-          <div class="package-duration-pill">
-            <span>⏱️ ${tour.duration}</span>
-          </div>
-          ${tour.featured ? '<div class="package-badge-top">Top Pick</div>' : ''}
+      <article class="package-card" data-category="${tour.category}">
+        <img src="${tour.image}" alt="${tour.title}" class="package-img" loading="lazy">
+        <div class="package-shade"></div>
+        <div class="package-duration-pill">
+          <span>⏱️ ${tour.duration}</span>
         </div>
-        
+        ${tour.featured ? '<div class="package-badge-top">Top Pick</div>' : ''}
+
         <div class="package-body">
           <span class="package-tag">${tour.tag}</span>
           <h3 class="package-title">${tour.title}</h3>
-          <p class="package-summary">${tour.description}</p>
-          
-          <div class="package-features">
-            ${tour.inclusions.map(inc => `<span class="feature-tag">✓ ${inc}</span>`).join('')}
+          <div class="package-price-row">
+            <span class="price-sub">From</span>
+            <span class="price-num">${formatPrice(tour.basePriceUSD)}</span>
+            <span class="price-sub">/ person</span>
           </div>
-          
-          <div class="package-footer">
-            <div class="price-unit">
-              <span class="price-sub">From / Person</span>
-              <span class="price-num">${formatPrice(tour.basePriceUSD)}</span>
-            </div>
-            <div class="package-actions">
-              <button class="btn-card-details" onclick="openTourModal('${tour.id}')">View Details</button>
-              <button class="btn-card-wa" onclick="bookTourWhatsApp('${tour.id}')">
-                <span>💬 Book</span>
-              </button>
+
+          <div class="package-reveal">
+            <div class="package-reveal-inner">
+              <p class="package-summary">${tour.description}</p>
+              <div class="package-features">
+                ${tour.inclusions.map(inc => `<span class="feature-tag">✓ ${inc}</span>`).join('')}
+              </div>
+              <div class="package-actions">
+                <button class="btn-card-details" onclick="openTourModal('${tour.id}')">View Details</button>
+                <button class="btn-card-wa" onclick="bookTourWhatsApp('${tour.id}')">
+                  <span><svg class="wa-icon" aria-hidden="true"><use href="#icon-whatsapp"></use></svg> Book</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </article>
     `;
-  }).join('');
+  }).join('') + CUSTOM_TOUR_CARD;
 }
+
+// Always-last card that invites visitors to build their own itinerary
+const CUSTOM_TOUR_CARD = `
+  <article class="package-card custom-tour-card">
+    <div class="custom-tour-inner">
+      <span class="custom-tour-icon">🧭</span>
+      <span class="package-tag">Tailor-Made</span>
+      <h3 class="custom-tour-title">Design Your Own Sri Lanka Journey</h3>
+      <p class="custom-tour-text">
+        Can't find the perfect trip? Tell us your dates, interests and travel style, and we'll plan a private day-by-day itinerary just for you.
+      </p>
+      <ul class="custom-tour-points">
+        <li>✓ Any length, from 1 day to 3 weeks</li>
+        <li>✓ Private vehicle &amp; English-speaking chauffeur</li>
+        <li>✓ Free itinerary within 2 hours</li>
+      </ul>
+      <div class="custom-tour-actions">
+        <a href="#planner" class="btn-book-cta">Plan My Trip →</a>
+        <button class="btn-card-wa" onclick="openWhatsApp('Hello NS TOURS!\\n\\nI would like a custom Sri Lanka itinerary. Could you help me plan my trip?')">
+          <span><svg class="wa-icon" aria-hidden="true"><use href="#icon-whatsapp"></use></svg> Ask on WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </article>
+`;
 
 /* ==========================================================================
    ITINERARY MODAL
@@ -497,14 +594,35 @@ function bookTourWhatsApp(tourId) {
   if (!tour) return;
 
   const price = formatPrice(tour.basePriceUSD);
-  const message = `Hello NS TOURS! 👋\n\nI would like to book this tour package:\n\n🌟 *Tour:* ${tour.title}\n⏱️ *Duration:* ${tour.duration}\n💵 *Price:* From ${price} / person\n\nPlease let me know availability and pickup options. Thank you!`;
+  const message = `Hello NS TOURS!\n\nI would like to book this tour package:\n\n*Tour:* ${tour.title}\n*Duration:* ${tour.duration}\n*Price:* From ${price} / person\n\nPlease let me know availability and pickup options. Thank you!`;
 
   openWhatsApp(message);
 }
 
+function initVehicleCards() {
+  document.querySelectorAll('.vehicle-box').forEach(card => {
+    const book = () => {
+      const title = card.querySelector('.vehicle-title')?.textContent.trim() || 'Private Vehicle';
+      const model = card.querySelector('.vehicle-sub')?.textContent.trim() || '';
+      const route = card.querySelector('.vehicle-fare-footer span')?.textContent.trim() || '';
+      const rate = card.querySelector('.vehicle-fare-footer strong')?.textContent.trim() || '';
+      const message = `Hello NS TOURS!\n\nI would like to book this vehicle:\n\n*Vehicle:* ${title} (${model})\n*Example Route:* ${route}\n*Rate:* ${rate}\n\nPlease share availability and a quote for my trip. Thank you!`;
+      openWhatsApp(message);
+    };
+
+    card.addEventListener('click', book);
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        book();
+      }
+    });
+  });
+}
+
 function openWhatsApp(customText) {
   const encoded = encodeURIComponent(customText);
-  const url = `https://wa.me/${WHATSAPP_PHONE}?text=${encoded}`;
+  const url = `https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${encoded}`;
   window.open(url, '_blank');
 }
 
@@ -523,7 +641,7 @@ function initPlannerForm() {
     const guests = document.getElementById('planGuests') ? document.getElementById('planGuests').value : '2 Adults';
     const notes = document.getElementById('planNotes') ? document.getElementById('planNotes').value : 'No special requests';
 
-    const msg = `Hello NS TOURS! 👋\n\nI want to design a *Custom Sri Lanka Tour*:\n\n👤 *Name:* ${name}\n🗓️ *Duration:* ${days}\n✨ *Preferred Style:* ${vibes}\n👥 *Travelers:* ${guests}\n📝 *Special Interests:* ${notes}\n\nPlease share a recommended custom itinerary and private chauffeur quote. Thank you!`;
+    const msg = `Hello NS TOURS!\n\nI want to design a *Custom Sri Lanka Tour*:\n\n*Name:* ${name}\n*Duration:* ${days}\n*Preferred Style:* ${vibes}\n*Travelers:* ${guests}\n*Special Interests:* ${notes}\n\nPlease share a recommended custom itinerary and private chauffeur quote. Thank you!`;
 
     openWhatsApp(msg);
   });
@@ -559,13 +677,383 @@ function initMobileMenu() {
     toggle.addEventListener('click', () => {
       menu.classList.toggle('open');
       toggle.textContent = menu.classList.contains('open') ? '✕' : '☰';
+      updateHeaderState();
     });
 
     menu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         menu.classList.remove('open');
         toggle.textContent = '☰';
+        updateHeaderState();
       });
     });
   }
+}
+
+/* ==========================================================================
+   SCROLL ANIMATIONS
+   Elements fade/slide in as they enter the viewport. Classes are added here
+   (not in the HTML) so content stays visible if JavaScript fails to load.
+   ========================================================================== */
+const REVEAL_GROUPS = [
+  // [selector, direction, stagger siblings]
+  ['.section-head', 'up', false],
+  ['.about-media', 'left', false],
+  ['.about-content', 'right', false],
+  ['.guarantee-item', 'up', true],
+  ['.filter-tabs-row', 'up', false],
+  ['.booking-card', 'zoom', false],
+  ['.fleet-box', 'up', false],
+  ['.vehicle-box', 'up', true],
+  ['.routes-card-table', 'up', false],
+  ['.planner-wrapper', 'up', false],
+  ['.review-item', 'up', true],
+  ['.faq-card', 'up', true],
+  ['.gallery-item', 'up', true],
+  ['.gallery-slider', 'up', false],
+  ['.gallery-cta', 'up', false],
+];
+
+function initScrollAnimations() {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion || !('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  REVEAL_GROUPS.forEach(([selector, direction, stagger]) => {
+    document.querySelectorAll(selector).forEach(el => {
+      el.classList.add('reveal');
+      if (direction !== 'up') el.dataset.reveal = direction;
+      if (stagger && el.parentElement) {
+        const index = Array.from(el.parentElement.children).indexOf(el);
+        el.style.setProperty('--reveal-delay', `${Math.min(index, 5) * 0.1}s`);
+      }
+      observer.observe(el);
+    });
+  });
+
+  initStatCounters();
+}
+
+// Count the About stats up from 0 (e.g. "12,000+") when they scroll into view
+function initStatCounters() {
+  const stats = document.querySelectorAll('.about-stat strong');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+
+      const el = entry.target;
+      const match = el.textContent.trim().match(/^([\d,]+)(.*)$/);
+      if (!match) return;
+
+      const target = parseInt(match[1].replace(/,/g, ''), 10);
+      const suffix = match[2];
+      const duration = 1600;
+      const start = performance.now();
+
+      const tick = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(target * eased).toLocaleString('en-US') + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.6 });
+
+  stats.forEach(stat => observer.observe(stat));
+}
+
+/* ==========================================================================
+   GALLERY + LIGHTBOX
+   ========================================================================== */
+function initGallery() {
+  // Any element with data-gallery (home slider or gallery page grid)
+  const items = Array.from(document.querySelectorAll('[data-gallery]'));
+  const lightbox = document.getElementById('lightbox');
+  const media = document.getElementById('lightboxMedia');
+  const caption = document.getElementById('lightboxCaption');
+  if (!items.length || !lightbox || !media) return;
+
+  let current = 0;
+  let lastFocused = null;
+
+  // Video tiles preview on hover (desktop)
+  items.filter(item => item.dataset.type === 'video').forEach(item => {
+    const video = item.querySelector('video');
+    item.addEventListener('mouseenter', () => {
+      const p = video.play();
+      if (p && p.catch) p.catch(() => {});
+    });
+    item.addEventListener('mouseleave', () => video.pause());
+  });
+
+  const show = (index) => {
+    current = (index + items.length) % items.length;
+    const item = items[current];
+    const text = item.querySelector('figcaption')?.textContent || '';
+
+    if (item.dataset.type === 'video') {
+      media.innerHTML = `<video src="${item.dataset.src}" autoplay muted loop playsinline controls></video>`;
+    } else {
+      media.innerHTML = `<img src="${item.dataset.src}" alt="${text}">`;
+    }
+    caption.textContent = `${text}  ·  ${current + 1} / ${items.length}`;
+  };
+
+  const open = (index) => {
+    lastFocused = document.activeElement;
+    show(index);
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    lightbox.querySelector('.lightbox-close').focus();
+  };
+
+  const close = () => {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    media.innerHTML = '';
+    if (lastFocused) lastFocused.focus();
+  };
+
+  items.forEach((item, i) => {
+    item.addEventListener('click', () => open(i));
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        open(i);
+      }
+    });
+  });
+
+  lightbox.querySelector('.lightbox-close').addEventListener('click', close);
+  lightbox.querySelector('.lightbox-prev').addEventListener('click', () => show(current - 1));
+  lightbox.querySelector('.lightbox-next').addEventListener('click', () => show(current + 1));
+
+  // Click on the dark backdrop closes
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) close();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+  });
+
+  // Swipe left / right on touch screens
+  let touchX = null;
+  lightbox.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+  lightbox.addEventListener('touchend', (e) => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
+    touchX = null;
+  });
+}
+
+// Home page gallery slider: arrows, swipe, autoplay, focus effect and progress dots
+const SLIDER_INTERVAL = 2500;
+
+function initGallerySlider() {
+  const track = document.getElementById('galleryTrack');
+  if (!track) return;
+
+  const slider = track.closest('.gallery-slider');
+  const slides = Array.from(track.querySelectorAll('.gallery-slide'));
+  const prev = slider.querySelector('.slider-prev');
+  const next = slider.querySelector('.slider-next');
+  slider.style.setProperty('--slider-interval', `${SLIDER_INTERVAL}ms`);
+
+  // Progress dots, one per slide
+  const dots = document.createElement('div');
+  dots.className = 'slider-dots';
+  slides.forEach((slide, i) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'slider-dot';
+    dot.setAttribute('aria-label', `Go to photo ${i + 1}`);
+    dot.addEventListener('click', () => {
+      track.scrollTo({ left: slide.offsetLeft - track.offsetLeft, behavior: 'smooth' });
+    });
+    dots.appendChild(dot);
+  });
+  slider.after(dots);
+
+  // Focus effect: fully visible slides are "in view"; the first one drives the dots
+  const visible = new Set();
+  const updateDots = () => {
+    const first = slides.findIndex(sl => visible.has(sl));
+    Array.from(dots.children).forEach((dot, i) => dot.classList.toggle('active', i === first));
+  };
+
+  const focusObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const inView = entry.intersectionRatio >= 0.6;
+      entry.target.classList.toggle('in-view', inView);
+      if (inView) visible.add(entry.target);
+      else visible.delete(entry.target);
+    });
+    updateDots();
+  }, { root: track, threshold: [0, 0.6, 1] });
+  slides.forEach(sl => focusObserver.observe(sl));
+
+  const step = () => {
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 16;
+    return slides[0] ? slides[0].offsetWidth + gap : track.clientWidth;
+  };
+
+  const atEnd = () => track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+
+  const goNext = () => {
+    if (atEnd()) track.scrollTo({ left: 0, behavior: 'smooth' });
+    else track.scrollBy({ left: step(), behavior: 'smooth' });
+  };
+
+  const goPrev = () => {
+    if (track.scrollLeft <= 4) track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
+    else track.scrollBy({ left: -step(), behavior: 'smooth' });
+  };
+
+  next.addEventListener('click', goNext);
+  prev.addEventListener('click', goPrev);
+
+  // Autoplay (skipped for reduced motion), paused on hover/touch and when off-screen
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  let timer = null;
+  let inViewport = false;
+  const start = () => {
+    if (timer || !inViewport) return;
+    timer = setInterval(goNext, SLIDER_INTERVAL);
+    dots.classList.add('is-playing');
+  };
+  const stop = () => {
+    clearInterval(timer);
+    timer = null;
+    dots.classList.remove('is-playing');
+  };
+
+  slider.addEventListener('mouseenter', stop);
+  slider.addEventListener('mouseleave', start);
+  track.addEventListener('touchstart', stop, { passive: true });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      inViewport = entry.isIntersecting;
+      if (inViewport) start();
+      else stop();
+    }, { threshold: 0.4 }).observe(slider);
+  }
+}
+
+/* ==========================================================================
+   HERO BACKGROUND VIDEO PLAYLIST
+   Two stacked <video> elements: one plays while the other preloads the next
+   clip, then they crossfade shortly before the current clip ends.
+   ========================================================================== */
+function initHeroVideo() {
+  const wrap = document.querySelector('.hero-video-wrap');
+  if (!wrap) return;
+
+  // Respect users who prefer less motion: keep the static hero image
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const clips = (wrap.dataset.videos || '').split(',').map(c => c.trim()).filter(Boolean);
+  const players = Array.from(wrap.querySelectorAll('.hero-video'));
+  if (!clips.length || players.length < 2) return;
+
+  const FADE_SECONDS = 1.2;
+  let clipIndex = 0;
+  let activePlayer = 0;
+  let switching = false;
+
+  const play = (video) => {
+    video.muted = true;
+    const p = video.play();
+    if (p && p.catch) p.catch(() => {});
+  };
+
+  const preloadNext = () => {
+    const nextPlayer = players[1 - activePlayer];
+    nextPlayer.src = clips[(clipIndex + 1) % clips.length];
+    nextPlayer.load();
+  };
+
+  const switchClip = () => {
+    if (switching) return;
+    switching = true;
+
+    const current = players[activePlayer];
+    const next = players[1 - activePlayer];
+
+    next.currentTime = 0;
+    play(next);
+    next.classList.add('is-active');
+    current.classList.remove('is-active');
+
+    setTimeout(() => {
+      current.pause();
+      activePlayer = 1 - activePlayer;
+      clipIndex = (clipIndex + 1) % clips.length;
+      switching = false;
+      preloadNext();
+    }, FADE_SECONDS * 1000);
+  };
+
+  players.forEach((video, i) => {
+    video.addEventListener('timeupdate', () => {
+      if (i !== activePlayer || !video.duration) return;
+      if (video.duration - video.currentTime <= FADE_SECONDS) switchClip();
+    });
+    // Safety net in case timeupdate fires too late on a slow device
+    video.addEventListener('ended', () => {
+      if (i === activePlayer) switchClip();
+    });
+  });
+
+  players[0].src = clips[0];
+  play(players[0]);
+  preloadNext();
+
+  // Pause while the hero is off-screen to save battery and CPU
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      const current = players[activePlayer];
+      if (entry.isIntersecting) play(current);
+      else current.pause();
+    }).observe(wrap);
+  }
+}
+
+/* ==========================================================================
+   HEADER: TRANSPARENT OVER HERO, SOLID ON SCROLL
+   ========================================================================== */
+function updateHeaderState() {
+  const header = document.querySelector('.main-header');
+  const menu = document.getElementById('navMenu');
+  if (!header) return;
+
+  const menuOpen = menu && menu.classList.contains('open');
+  header.classList.toggle('is-transparent', window.scrollY < 20 && !menuOpen);
+
+  // Floating WhatsApp button appears once the visitor scrolls past most of the hero
+  const waFloat = document.querySelector('.wa-float-btn');
+  if (waFloat) waFloat.classList.toggle('is-visible', window.scrollY > window.innerHeight * 0.6);
+}
+
+function initHeaderScroll() {
+  updateHeaderState();
+  window.addEventListener('scroll', updateHeaderState, { passive: true });
 }

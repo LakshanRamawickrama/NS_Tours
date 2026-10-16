@@ -25,38 +25,16 @@
 </head>
 <body>
 
-  <!-- Top Slim Utility Bar -->
-  <div class="top-bar">
-    <div class="container top-bar-inner">
-      <div class="top-trust">
-        <span class="trust-badge-pill">SLTDA Certified</span>
-        <span>Tourist Board Licensed Drivers • 100% Fixed Rates (All Highway Tolls Included)</span>
-      </div>
+  <!-- Icon sprite: WhatsApp logo, used via <use href="#icon-whatsapp"> -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="icon-whatsapp" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </symbol>
+  </svg>
 
-      <div class="top-utilities">
-        <div class="top-currency">
-          <span>💱 Currency:</span>
-          <select id="currencySelector" class="currency-select" aria-label="Select Currency">
-            <option value="USD" selected>USD ($)</option>
-            <option value="EUR">EUR (€)</option>
-            <option value="GBP">GBP (£)</option>
-            <option value="AUD">AUD (A$)</option>
-            <option value="LKR">LKR (Rs)</option>
-          </select>
-        </div>
-
-        <a href="tel:+94770000000" class="top-link">
-          <span>📞 +94 77 000 0000</span>
-        </a>
-        <a href="mailto:info@nstours.com" class="top-link">
-          <span>✉️ info@nstours.com</span>
-        </a>
-      </div>
-    </div>
-  </div>
 
   <!-- Main Header Navigation -->
-  <header class="main-header">
+  <header class="main-header is-transparent">
     <div class="container navbar">
       <a href="#home" class="brand-link">
         <img src="assets/images/logo.jpg" alt="NS Tours Sri Lanka" class="brand-logo-img">
@@ -70,27 +48,87 @@
       <nav>
         <ul class="nav-menu" id="navMenu">
           <li><a href="#home" class="nav-link active">Home</a></li>
-          <li><a href="#transport" class="nav-link">Airport Taxi</a></li>
-          <li><a href="#tours" class="nav-link">Day Tours</a></li>
-          <li><a href="#tours" class="nav-link">2-Day Escapes</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li class="nav-has-mega">
+            <a href="#tours" class="nav-link">Tours <span class="nav-caret" aria-hidden="true">▾</span></a>
+
+            <!-- Tours mega menu (lists are filled from TOURS in app.js) -->
+            <div class="tours-mega" id="toursMega">
+              <div class="tours-mega-top">
+                <span class="tours-mega-title">📍 All Tours in Sri Lanka</span>
+                <div class="tours-mega-filters">
+                  <a href="#tours" data-menu-filter="1day">1-Day</a>
+                  <a href="#tours" data-menu-filter="2day">2-Day</a>
+                  <a href="#tours" data-menu-filter="multiday">Multi-Day</a>
+                  <a href="#tours" data-menu-filter="safari">Safari &amp; Ocean</a>
+                </div>
+              </div>
+
+              <div class="tours-mega-cols">
+                <div class="tours-mega-col">
+                  <h4 class="tours-mega-heading">Day Tours</h4>
+                  <ul class="tours-mega-list" id="megaDayTours"></ul>
+                  <a href="#tours" class="tours-mega-more" data-menu-filter="all">View All Tours <span>→</span></a>
+                </div>
+
+                <div class="tours-mega-col is-warm">
+                  <h4 class="tours-mega-heading">Multi-Day Packages</h4>
+                  <ul class="tours-mega-list" id="megaMultiTours"></ul>
+                  <a href="#planner" class="tours-mega-more">Design Your Own Journey <span>→</span></a>
+                </div>
+              </div>
+            </div>
+          </li>
           <li><a href="#fleet" class="nav-link">Our Fleet</a></li>
           <li><a href="#routes" class="nav-link">Fixed Rates</a></li>
-          <li><a href="#reviews" class="nav-link">Reviews</a></li>
+          <li><a href="gallery.html" class="nav-link">Gallery</a></li>
           <li><a href="#faq" class="nav-link">FAQ</a></li>
+          <li class="nav-menu-currency">
+            <label for="currencySelectorMobile">💱 Currency</label>
+            <select id="currencySelectorMobile" class="currency-select" aria-label="Select Currency">
+              <option value="EUR" selected>EUR (€)</option>
+              <option value="GBP">GBP (£)</option>
+              <option value="CHF">CHF (Fr)</option>
+              <option value="USD">USD ($)</option>
+              <option value="AUD">AUD (A$)</option>
+              <option value="LKR">LKR (Rs)</option>
+            </select>
+          </li>
         </ul>
       </nav>
 
       <div class="nav-actions">
+        <label class="header-currency" for="currencySelector" title="Select Currency">
+          <span class="header-currency-icon">💱</span>
+          <select id="currencySelector" class="currency-select" aria-label="Select Currency">
+            <option value="EUR" selected>EUR (€)</option>
+            <option value="GBP">GBP (£)</option>
+            <option value="CHF">CHF (Fr)</option>
+            <option value="USD">USD ($)</option>
+            <option value="AUD">AUD (A$)</option>
+            <option value="LKR">LKR (Rs)</option>
+          </select>
+        </label>
+        <a href="#book" class="btn-header-book">
+          <span>🚗 Book a Taxi</span>
+        </a>
         <a href="https://wa.me/94770000000?text=Hello%20NS%20TOURS!%20I%20would%20like%20to%20inquire%20about%20tours%20and%20private%20transport." target="_blank" class="btn-header-wa">
-          <span>💬 WhatsApp Desk</span>
+          <span><svg class="wa-icon" aria-hidden="true"><use href="#icon-whatsapp"></use></svg> WhatsApp Desk</span>
         </a>
         <button class="mobile-toggle-btn" id="mobileMenuToggle" aria-label="Toggle navigation">☰</button>
       </div>
     </div>
   </header>
 
-  <!-- Hero Section with Integrated Booking Card -->
+  <!-- Hero Section -->
   <section class="hero-section" id="home">
+    <!-- Background video playlist (crossfades between clips, see app.js) -->
+    <div class="hero-video-wrap" aria-hidden="true"
+         data-videos="assets/videos/hero-train.mp4,assets/videos/hero-sigiriya.mp4,assets/videos/hero-beach.mp4">
+      <video class="hero-video is-active" muted playsinline preload="auto"></video>
+      <video class="hero-video" muted playsinline preload="auto"></video>
+    </div>
+
     <div class="container">
       <div class="hero-header-box">
         <div class="hero-trust-tag">
@@ -101,20 +139,175 @@
         <p class="hero-sub-text">
           Reliable airport transfers, handcrafted 1-day & 2-day excursions, and bespoke island journeys tailored for international travelers.
         </p>
-      </div>
 
-      <!-- Booking Card (Directly Visible Above the Fold) -->
-      <div class="booking-card">
-        <div class="booking-tabs-nav">
-          <button class="booking-tab-item active" data-tab="tabTransport">
-            <span>🚗 Book Airport Taxi &amp; Transfers</span>
-          </button>
-          <button class="booking-tab-item" data-tab="tabTours">
-            <span>🗺️ Explore Tour Packages (1-Day &amp; 2-Day)</span>
-          </button>
+        <div class="hero-cta-row">
+          <a href="#book" class="btn-book-cta btn-hero">
+            <span>🚗 Get Instant Taxi Quote</span>
+          </a>
+          <a href="#tours" class="btn-hero-ghost">
+            <span>🗺️ Explore Tour Packages</span>
+          </a>
         </div>
 
-        <!-- Panel 1: Transport Calculator -->
+        <ul class="hero-offer-list">
+          <li><a href="#book">✈️ Airport Transfers</a></li>
+          <li><a href="#tours">🌴 1-Day Tours</a></li>
+          <li><a href="#tours">🏔️ 2-Day Escapes</a></li>
+          <li><a href="#fleet">🚘 Private Chauffeur</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <a href="#about" class="hero-scroll-cue" aria-label="Scroll to learn more">
+      <span class="hero-scroll-mouse"></span>
+    </a>
+  </section>
+
+  <!-- About Us Section -->
+  <section class="section-wrap about-section" id="about">
+    <div class="container about-grid">
+      <div class="about-media">
+        <!-- Pinwheel photo collage: six destinations around a central logo tile -->
+        <div class="about-collage">
+          <figure class="collage-tile tile-sigiriya">
+            <img src="assets/images/sigiriya.jpg" alt="Sigiriya Lion Rock" loading="lazy">
+          </figure>
+          <figure class="collage-tile tile-ocean">
+            <img src="assets/images/ocean.jpg" alt="Sri Lanka south coast beach" loading="lazy">
+          </figure>
+          <figure class="collage-tile tile-galle">
+            <img src="assets/images/galle.jpg" alt="Galle Fort lighthouse" loading="lazy">
+          </figure>
+          <figure class="collage-tile tile-ella">
+            <img src="assets/images/hero.jpg" alt="Ella hill country and Nine Arch Bridge" loading="lazy">
+          </figure>
+
+          <div class="collage-center">
+            <div class="collage-logo">
+              <img src="assets/images/logo.jpg" alt="NS Tours logo">
+            </div>
+            <span class="collage-brand">NS <span>TOURS</span></span>
+            <span class="collage-license">🛡️ SLTDA Licensed</span>
+          </div>
+
+          <figure class="collage-tile tile-safari">
+            <img src="assets/images/safari.jpg" alt="Wild elephants on safari" loading="lazy">
+          </figure>
+          <figure class="collage-tile tile-fleet">
+            <img src="assets/images/fleet.jpg" alt="NS Tours private vehicles" loading="lazy">
+          </figure>
+        </div>
+      </div>
+
+      <div class="about-content">
+        <span class="section-badge">About NS Tours</span>
+        <h2 class="section-heading">Your Trusted Local Partner for Exploring Sri Lanka</h2>
+        <p class="about-text">
+          NS Tours is a Sri Lankan private transport and tour company built for international travelers. From the moment you land at Colombo Airport, our licensed, English-speaking chauffeurs take care of the journey, so you can simply enjoy the island.
+        </p>
+        <p class="about-text">
+          Whether you need a quick airport transfer, a day trip to Sigiriya or Galle, or a multi-day island adventure, we offer clean AC vehicles, fixed prices with no hidden fees, and friendly local knowledge on every trip.
+        </p>
+
+        <div class="about-stats">
+          <div class="about-stat">
+            <strong>12,000+</strong>
+            <span>Happy Travelers</span>
+          </div>
+          <div class="about-stat">
+            <strong>1,200+</strong>
+            <span>Five-Star Reviews</span>
+          </div>
+          <div class="about-stat">
+            <strong>100%</strong>
+            <span>Fixed Prices</span>
+          </div>
+        </div>
+
+        <a href="#tours" class="btn-book-cta">
+          <span>Discover Our Tours →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clear Trust Guarantees Bar -->
+  <div class="guarantee-bar">
+    <div class="container guarantee-grid">
+      <div class="guarantee-item">
+        <div class="guarantee-icon">🛡️</div>
+        <div>
+          <div class="guarantee-title">SLTDA Certified Chauffeurs</div>
+          <div class="guarantee-sub">Licensed English-speaking professional guides.</div>
+        </div>
+      </div>
+
+      <div class="guarantee-item">
+        <div class="guarantee-icon">💎</div>
+        <div>
+          <div class="guarantee-title">Zero Hidden Tolls or Fees</div>
+          <div class="guarantee-sub">Expressway tolls, fuel, and parking 100% included.</div>
+        </div>
+      </div>
+
+      <div class="guarantee-item">
+        <div class="guarantee-icon">❄️</div>
+        <div>
+          <div class="guarantee-title">Spotless AC Vehicles</div>
+          <div class="guarantee-sub">Chilled AC, high-speed Wi-Fi & mineral water.</div>
+        </div>
+      </div>
+
+      <div class="guarantee-item">
+        <div class="guarantee-icon">🔄</div>
+        <div>
+          <div class="guarantee-title">Free Cancellation</div>
+          <div class="guarantee-sub">Cancel up to 24 hours prior with zero penalty.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tour Packages Section -->
+  <section class="section-wrap" id="tours">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-badge">Handcrafted Journeys</span>
+        <h2 class="section-heading">Curated Sri Lanka Tour Packages</h2>
+        <p class="section-desc">
+          Created specifically for international tourists. Choose between thrilling 1-day highlights, 2-day countryside escapes, and multi-day island expeditions.
+        </p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="filter-tabs-row">
+        <button class="filter-pill-btn active" data-filter="all">All Experiences</button>
+        <button class="filter-pill-btn" data-filter="1day">1-Day Excursions</button>
+        <button class="filter-pill-btn" data-filter="2day">2-Day Escapes</button>
+        <button class="filter-pill-btn" data-filter="multiday">Multi-Day Expeditions</button>
+        <button class="filter-pill-btn" data-filter="safari">Safari &amp; Ocean</button>
+      </div>
+
+      <!-- Tours Cards Grid -->
+      <div class="tours-card-grid" id="toursGrid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Airport Taxi Booking Section -->
+  <section class="section-wrap booking-section" id="book">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-badge">Instant Fixed Price</span>
+        <h2 class="section-heading">Book Your Airport Taxi &amp; Transfer</h2>
+        <p class="section-desc">
+          Choose your route and vehicle to see your fixed rate. Expressway tolls and fuel are always included.
+        </p>
+      </div>
+
+      <div class="booking-card">
+        <!-- Transport Fare Calculator -->
         <div class="booking-pane active" id="tabTransport">
           <div class="booking-form-grid">
             <div class="input-box">
@@ -189,124 +382,17 @@
             </div>
 
             <button type="button" class="btn-book-cta" id="btnBookTransport">
-              <span>💬 Book on WhatsApp Instantly</span>
+              <span><svg class="wa-icon" aria-hidden="true"><use href="#icon-whatsapp"></use></svg> Book on WhatsApp Instantly</span>
             </button>
           </div>
         </div>
 
-        <!-- Panel 2: Quick Tour Filter -->
-        <div class="booking-pane" id="tabTours">
-          <div class="booking-form-grid">
-            <div class="input-box">
-              <label class="input-label" for="tourDurationSelect">⏱️ Select Tour Duration</label>
-              <select id="tourDurationSelect" class="input-field" onchange="filterToursFromSelect(this.value)">
-                <option value="all">All Available Packages</option>
-                <option value="1day">1-Day Highlights</option>
-                <option value="2day">2-Day Scenic Escapes</option>
-                <option value="multiday">Multi-Day Expeditions (3-7 Days)</option>
-                <option value="safari">Wildlife Safari &amp; Marine</option>
-              </select>
-            </div>
-
-            <div class="input-box">
-              <label class="input-label">🌴 Favorite Destination</label>
-              <select class="input-field">
-                <option>Sigiriya &amp; Dambulla Caves</option>
-                <option>Galle Fort &amp; Sea Turtles</option>
-                <option>Ella Scenic Train &amp; Tea</option>
-                <option>Udawalawe / Yala Safari</option>
-                <option>Mirissa Whale Watching</option>
-              </select>
-            </div>
-
-            <div class="input-box">
-              <label class="input-label">👥 Number of Guests</label>
-              <select class="input-field">
-                <option>Solo Explorer</option>
-                <option selected>Couple (2 Persons)</option>
-                <option>Family (3-5 Persons)</option>
-                <option>Group (6+ Persons)</option>
-              </select>
-            </div>
-
-            <div class="input-box">
-              <label class="input-label">🚀 Action</label>
-              <a href="#tours" class="btn-book-cta" style="justify-content: center; width: 100%;">
-                <span>Browse Tours Below ↓</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Clear Trust Guarantees Bar -->
-  <div class="guarantee-bar">
-    <div class="container guarantee-grid">
-      <div class="guarantee-item">
-        <div class="guarantee-icon">🛡️</div>
-        <div>
-          <div class="guarantee-title">SLTDA Certified Chauffeurs</div>
-          <div class="guarantee-sub">Licensed English-speaking professional guides.</div>
-        </div>
-      </div>
-
-      <div class="guarantee-item">
-        <div class="guarantee-icon">💎</div>
-        <div>
-          <div class="guarantee-title">Zero Hidden Tolls or Fees</div>
-          <div class="guarantee-sub">Expressway tolls, fuel, and parking 100% included.</div>
-        </div>
-      </div>
-
-      <div class="guarantee-item">
-        <div class="guarantee-icon">❄️</div>
-        <div>
-          <div class="guarantee-title">Spotless AC Vehicles</div>
-          <div class="guarantee-sub">Chilled AC, high-speed Wi-Fi & mineral water.</div>
-        </div>
-      </div>
-
-      <div class="guarantee-item">
-        <div class="guarantee-icon">🔄</div>
-        <div>
-          <div class="guarantee-title">Free Cancellation</div>
-          <div class="guarantee-sub">Cancel up to 24 hours prior with zero penalty.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Tour Packages Section -->
-  <section class="section-wrap" id="tours">
-    <div class="container">
-      <div class="section-head">
-        <span class="section-badge">Handcrafted Journeys</span>
-        <h2 class="section-heading">Curated Sri Lanka Tour Packages</h2>
-        <p class="section-desc">
-          Created specifically for international tourists. Choose between thrilling 1-day highlights, 2-day countryside escapes, and multi-day island expeditions.
-        </p>
-      </div>
-
-      <!-- Filter Tabs -->
-      <div class="filter-tabs-row">
-        <button class="filter-pill-btn active" data-filter="all">All Experiences</button>
-        <button class="filter-pill-btn" data-filter="1day">1-Day Excursions</button>
-        <button class="filter-pill-btn" data-filter="2day">2-Day Escapes</button>
-        <button class="filter-pill-btn" data-filter="multiday">Multi-Day Expeditions</button>
-        <button class="filter-pill-btn" data-filter="safari">Safari &amp; Ocean</button>
-      </div>
-
-      <!-- Tours Cards Grid -->
-      <div class="tours-card-grid" id="toursGrid">
-        <!-- Rendered dynamically by app.js -->
       </div>
     </div>
   </section>
 
   <!-- Transport & Fleet Section -->
-  <section class="section-wrap" id="transport" style="background: #FFFFFF;">
+  <section class="section-wrap" id="transport">
     <div class="container">
       <div class="section-head">
         <span class="section-badge">Private Transport</span>
@@ -336,14 +422,14 @@
           </div>
 
           <a href="https://wa.me/94770000000?text=Hello%20NS%20TOURS!%20I%20would%20like%20to%20hire%20a%20private%20chauffeur%20and%20car." target="_blank" class="btn-book-cta" style="align-self: flex-start;">
-            <span>💬 Inquire for Private Chauffeur</span>
+            <span><svg class="wa-icon" aria-hidden="true"><use href="#icon-whatsapp"></use></svg> Inquire for Private Chauffeur</span>
           </a>
         </div>
       </div>
 
       <!-- Vehicle Categories Grid -->
       <div class="vehicles-card-grid">
-        <div class="vehicle-box">
+        <div class="vehicle-box" role="button" tabindex="0" aria-label="Book this vehicle on WhatsApp">
           <div class="vehicle-icon">🚗</div>
           <h4 class="vehicle-title">Premium Sedan</h4>
           <p class="vehicle-sub">Toyota Prius, Axio or Allion</p>
@@ -357,15 +443,16 @@
           </p>
           <div class="vehicle-fare-footer">
             <span style="font-size: 0.72rem; color: var(--text-muted);">CMB to Colombo</span>
-            <strong style="color: var(--primary-hover); font-size: 1.05rem;">From $ 28</strong>
+            <strong style="color: var(--primary-hover); font-size: 1.05rem;">From <span class="vehicle-price" data-price-usd="28">$ 28</span></strong>
           </div>
+          <span class="vehicle-wa-cta"><svg class="wa-icon" aria-hidden="true"><use href="#icon-whatsapp"></use></svg> Book on WhatsApp <span aria-hidden="true">→</span></span>
         </div>
 
-        <div class="vehicle-box" style="border-color: #FCD34D;">
+        <div class="vehicle-box" role="button" tabindex="0" aria-label="Book this vehicle on WhatsApp" style="border-color: #FCD34D;">
           <div class="vehicle-icon">🚐</div>
           <div style="display: flex; justify-content: space-between; align-items: baseline;">
             <h4 class="vehicle-title">Toyota KDH Luxury Van</h4>
-            <span style="background: #FEF3C7; color: #B45309; font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 99px;">POPULAR</span>
+            <span class="vehicle-popular-tag">POPULAR</span>
           </div>
           <p class="vehicle-sub">Toyota KDH High-Roof Commuter</p>
           <div class="vehicle-pill-row">
@@ -378,11 +465,12 @@
           </p>
           <div class="vehicle-fare-footer">
             <span style="font-size: 0.72rem; color: var(--text-muted);">CMB to Mirissa / Galle</span>
-            <strong style="color: var(--primary-hover); font-size: 1.05rem;">From $ 95</strong>
+            <strong style="color: var(--primary-hover); font-size: 1.05rem;">From <span class="vehicle-price" data-price-usd="95">$ 95</span></strong>
           </div>
+          <span class="vehicle-wa-cta"><svg class="wa-icon" aria-hidden="true"><use href="#icon-whatsapp"></use></svg> Book on WhatsApp <span aria-hidden="true">→</span></span>
         </div>
 
-        <div class="vehicle-box">
+        <div class="vehicle-box" role="button" tabindex="0" aria-label="Book this vehicle on WhatsApp">
           <div class="vehicle-icon">🚙</div>
           <h4 class="vehicle-title">Executive 4WD SUV</h4>
           <p class="vehicle-sub">Toyota Prado / Fortuner 4x4</p>
@@ -396,11 +484,12 @@
           </p>
           <div class="vehicle-fare-footer">
             <span style="font-size: 0.72rem; color: var(--text-muted);">CMB to Hill Country</span>
-            <strong style="color: var(--primary-hover); font-size: 1.05rem;">From $ 120</strong>
+            <strong style="color: var(--primary-hover); font-size: 1.05rem;">From <span class="vehicle-price" data-price-usd="120">$ 120</span></strong>
           </div>
+          <span class="vehicle-wa-cta"><svg class="wa-icon" aria-hidden="true"><use href="#icon-whatsapp"></use></svg> Book on WhatsApp <span aria-hidden="true">→</span></span>
         </div>
 
-        <div class="vehicle-box">
+        <div class="vehicle-box" role="button" tabindex="0" aria-label="Book this vehicle on WhatsApp">
           <div class="vehicle-icon">🚌</div>
           <h4 class="vehicle-title">Tourist Mini Coach</h4>
           <p class="vehicle-sub">Toyota Coaster (14-22 Seater)</p>
@@ -416,6 +505,7 @@
             <span style="font-size: 0.72rem; color: var(--text-muted);">Island-wide Charter</span>
             <strong style="color: var(--primary-hover); font-size: 1.05rem;">Custom Quote</strong>
           </div>
+          <span class="vehicle-wa-cta"><svg class="wa-icon" aria-hidden="true"><use href="#icon-whatsapp"></use></svg> Book on WhatsApp <span aria-hidden="true">→</span></span>
         </div>
       </div>
     </div>
@@ -508,7 +598,7 @@
   </section>
 
   <!-- Tailor-Made Custom Trip Planner -->
-  <section class="container" style="margin-bottom: 60px;">
+  <section class="container" id="planner" style="margin-bottom: 60px;">
     <div class="planner-wrapper">
       <div class="planner-layout">
         <div>
@@ -555,15 +645,67 @@
           <input type="text" id="planNotes" class="planner-ctrl" placeholder="Special highlights (e.g. Sigiriya climb, Ella train)">
 
           <button type="button" id="btnSubmitCustomPlan" class="btn-book-cta" style="justify-content: center; width: 100%;">
-            <span>💬 Send Custom Plan on WhatsApp</span>
+            <span><svg class="wa-icon" aria-hidden="true"><use href="#icon-whatsapp"></use></svg> Send Custom Plan on WhatsApp</span>
           </button>
         </form>
       </div>
     </div>
   </section>
 
+  <!-- Gallery Preview Slider (full gallery lives on gallery.html) -->
+  <section class="section-wrap" id="gallery">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-badge">Gallery</span>
+        <h2 class="section-heading">Moments From Sri Lanka</h2>
+        <p class="section-desc">
+          A glimpse of the places our guests explore every day, from ancient rock fortresses to misty tea hills and golden beaches.
+        </p>
+      </div>
+
+      <div class="gallery-slider">
+        <button type="button" class="slider-btn slider-prev" aria-label="Previous photos">‹</button>
+        <div class="gallery-track" id="galleryTrack">
+          <figure class="gallery-slide" data-gallery data-type="image" data-src="assets/images/sigiriya.jpg" tabindex="0" aria-label="View photo: Sigiriya Lion Rock at sunrise">
+            <img src="assets/images/sigiriya.jpg" alt="Sigiriya Lion Rock at sunrise" loading="lazy">
+            <figcaption>Sigiriya Lion Rock at sunrise</figcaption>
+          </figure>
+          <figure class="gallery-slide" data-gallery data-type="video" data-src="assets/videos/hero-train.mp4" tabindex="0" aria-label="Play video: Blue train crossing the Nine Arch Bridge, Ella">
+            <video src="assets/videos/hero-train.mp4" poster="assets/videos/hero-train-poster.jpg" muted loop playsinline preload="none"></video>
+            <span class="gallery-play" aria-hidden="true">▶</span>
+            <figcaption>Blue train crossing the Nine Arch Bridge, Ella</figcaption>
+          </figure>
+          <figure class="gallery-slide" data-gallery data-type="image" data-src="assets/images/galle.jpg" tabindex="0" aria-label="View photo: Galle Dutch Fort & lighthouse">
+            <img src="assets/images/galle.jpg" alt="Galle Dutch Fort & lighthouse" loading="lazy">
+            <figcaption>Galle Dutch Fort & lighthouse</figcaption>
+          </figure>
+          <figure class="gallery-slide" data-gallery data-type="image" data-src="assets/images/safari.jpg" tabindex="0" aria-label="View photo: Wild elephants on safari">
+            <img src="assets/images/safari.jpg" alt="Wild elephants on safari" loading="lazy">
+            <figcaption>Wild elephants on safari</figcaption>
+          </figure>
+          <figure class="gallery-slide" data-gallery data-type="video" data-src="assets/videos/hero-beach.mp4" tabindex="0" aria-label="Play video: Golden hour over Mirissa beach">
+            <video src="assets/videos/hero-beach.mp4" poster="assets/videos/hero-beach-poster.jpg" muted loop playsinline preload="none"></video>
+            <span class="gallery-play" aria-hidden="true">▶</span>
+            <figcaption>Golden hour over Mirissa beach</figcaption>
+          </figure>
+          <figure class="gallery-slide" data-gallery data-type="image" data-src="assets/images/ocean.jpg" tabindex="0" aria-label="View photo: Turquoise bays of the south coast">
+            <img src="assets/images/ocean.jpg" alt="Turquoise bays of the south coast" loading="lazy">
+            <figcaption>Turquoise bays of the south coast</figcaption>
+          </figure>
+        </div>
+        <button type="button" class="slider-btn slider-next" aria-label="Next photos">›</button>
+      </div>
+
+      <div class="gallery-more-row">
+        <a href="gallery.html" class="btn-book-cta">
+          <span>+ More Photos &amp; Videos</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- Real Traveler Reviews -->
-  <section class="section-wrap" id="reviews" style="background: #FFFFFF;">
+  <section class="section-wrap" id="reviews">
     <div class="container">
       <div class="section-head">
         <span class="section-badge">Foreign Traveler Reviews</span>
@@ -691,6 +833,17 @@
   </section>
 
   <!-- Detailed Itinerary Modal -->
+  <!-- Gallery Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Gallery viewer" aria-hidden="true">
+    <button type="button" class="lightbox-btn lightbox-close" aria-label="Close gallery">✕</button>
+    <button type="button" class="lightbox-btn lightbox-prev" aria-label="Previous">‹</button>
+    <figure class="lightbox-stage">
+      <div class="lightbox-media" id="lightboxMedia"></div>
+      <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
+    </figure>
+    <button type="button" class="lightbox-btn lightbox-next" aria-label="Next">›</button>
+  </div>
+
   <div class="modal-overlay" id="tourModal" onclick="handleModalBackdropClick(event)">
     <div class="modal-card">
       <div class="modal-img-wrap">
@@ -703,8 +856,8 @@
         
         <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;">
           <span class="feature-tag" id="modalTourDuration">⏱️ 1 Day</span>
-          <span class="feature-tag" style="background: #FEF3C7; color: #92400E;">🛡️ SLTDA Certified Guide</span>
-          <span class="feature-tag" style="background: #CCFBF1; color: #0F766E;">❄️ Private AC Vehicle</span>
+          <span class="feature-tag feature-tag-amber">🛡️ SLTDA Certified Guide</span>
+          <span class="feature-tag feature-tag-teal">❄️ Private AC Vehicle</span>
         </div>
 
         <h4 style="font-size: 0.95rem; color: var(--dark); margin: 16px 0 8px;">Detailed Step-by-Step Itinerary:</h4>
@@ -723,7 +876,7 @@
             <div id="modalTourPrice" style="font-size: 1.4rem; font-weight: 800; color: var(--dark); font-family: var(--font-heading);">$ 78</div>
           </div>
           <button class="btn-book-cta" id="modalBookBtn">
-            <span>💬 Book on WhatsApp</span>
+            <span><svg class="wa-icon" aria-hidden="true"><use href="#icon-whatsapp"></use></svg> Book on WhatsApp</span>
           </button>
         </div>
       </div>
@@ -732,7 +885,8 @@
 
   <!-- Floating Quick WhatsApp Button -->
   <a href="https://wa.me/94770000000?text=Hello%20NS%20TOURS!%20I%20would%20like%20to%20plan%20my%20trip%20to%20Sri%20Lanka." target="_blank" class="wa-float-btn" aria-label="Chat on WhatsApp">
-    <span>💬 WhatsApp 24/7</span>
+    <span class="wa-float-icon" aria-hidden="true"><svg class="wa-icon" aria-hidden="true"><use href="#icon-whatsapp"></use></svg></span>
+    <span class="wa-float-label">WhatsApp 24/7</span>
   </a>
 
   <!-- Site Footer -->
@@ -802,7 +956,7 @@
     }
 
     function quickBookRoute(origin, dest) {
-      const msg = `Hello NS TOURS! 👋\n\nI want to book an airport taxi transfer:\n\n📍 From: ${origin}\n🏁 To: ${dest}\n\nPlease share driver availability and confirmation. Thank you!`;
+      const msg = `Hello NS TOURS!\n\nI want to book an airport taxi transfer:\n\n*From:* ${origin}\n*To:* ${dest}\n\nPlease share driver availability and confirmation. Thank you!`;
       openWhatsApp(msg);
     }
 
